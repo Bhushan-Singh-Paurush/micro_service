@@ -1,0 +1,28 @@
+services:
+  attendance:
+    build: ./Attendance
+    container_name: attendance_server
+    env_file:
+      - ./Attendance/.env
+    restart: always
+    ports:
+      - "4001:4001"
+
+  customer:
+    build: ./Customer
+    container_name: customer_server
+    env_file:
+      - ./Customer/.env
+    restart: always
+    ports:
+      - "4002:4002"
+
+
+  parking:
+    build: ./Parking
+    container_name: parking_server
+    env_file:
+      - ./Parking/.env
+    restart: always
+    ports:
+      - "4003:4003"          

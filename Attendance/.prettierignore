@@ -1,0 +1,41 @@
+# Dependencies
+/node_modules
+
+# Generated files
+/generated
+
+# Build folders
+/dist
+/build
+
+# Environment files
+.env
+.env.*
+
+# Logs
+/logs
+*.log
+
+# Prisma generated files
+/prisma/generated
+
+# Coverage
+/coverage
+
+# Temporary files
+/tmp
+/temp
+
+# VS Code
+.vscode
+
+# OS files
+.DS_Store
+
+# Deployment
+.vercel
+.next
+
+# package
+./package.json
+./package-lock.json
