@@ -1,0 +1,30 @@
+{
+  "name": "notification",
+  "version": "1.0.0",
+  "description": "Notification service ",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "prettier": "prettier --write .",
+    "start": "node --watch src/index.js"
+  },
+  "author": "Motion Tech",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^6.19.3",
+    "bullmq": "^5.77.4",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "helmet": "^8.2.0",
+    "morgan": "^1.10.1",
+    "nodemailer": "^8.0.9",
+    "prisma": "^6.19.3",
+    "socket.io": "^4.8.3",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "prettier": "3.8.3"
+  }
+}

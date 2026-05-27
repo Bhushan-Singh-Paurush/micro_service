@@ -18,11 +18,12 @@ services:
       - "4002:4002"
 
 
-  parking:
-    build: ./Parking
-    container_name: parking_server
+  authentication:
+    build: ./Authentication
+    container_name: authentication_server
     env_file:
-      - ./Parking/.env
+      - ./Authentication/.env
     restart: always
     ports:
-      - "4003:4003"          
+      - "4003:4003"     
+       
