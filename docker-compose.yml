@@ -26,4 +26,13 @@ services:
     restart: always
     ports:
       - "4003:4003"     
+
+  notification:
+    build: ./Notification
+    container_name: notification_server
+    env_file:
+      - ./Notification/.env
+    restart: always
+    ports:
+      - "4004:4004"      
        
