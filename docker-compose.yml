@@ -17,7 +17,6 @@ services:
     ports:
       - "4002:4002"
 
-
   authentication:
     build: ./Authentication
     container_name: authentication_server
@@ -34,5 +33,25 @@ services:
       - ./Notification/.env
     restart: always
     ports:
-      - "4004:4004"      
+      - "4004:4004" 
+
+  kong:
+    image: kong:3.6
+    container_name: kong_gateway
+    restart: always
+    environment:
+      KONG_DATABASE: "off"
+      KONG_DECLARATIVE_CONFIG: /kong/kong.yml
+      KONG_PROXY_LISTEN: 0.0.0.0:8000
+      KONG_ADMIN_LISTEN: 0.0.0.0:8001
+    volumes:
+      - ./kong.yml:/kong/kong.yml
+    ports:
+      - "8000:8000"   # Proxy port (public API)
+      - "8001:8001"   # Admin API (internal use)
+    depends_on:
+      - attendance
+      - customer
+      - authentication
+      - notification         
        

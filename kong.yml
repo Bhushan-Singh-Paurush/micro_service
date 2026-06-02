@@ -1,0 +1,30 @@
+_format_version: "3.0"
+
+services:
+  - name: attendance_service
+    url: http://attendance:4001
+    routes:
+      - name: attendance_route
+        paths:
+          - /attendance
+
+  - name: customer_service
+    url: http://customer:4002
+    routes:
+      - name: customer_route
+        paths:
+          - /customer
+
+  - name: auth_service
+    url: http://authentication:4003
+    routes:
+      - name: auth_route
+        paths:
+          - /auth
+
+  - name: notification_service
+    url: http://notification:4004
+    routes:
+      - name: notification_route
+        paths:
+          - /notification
