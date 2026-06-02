@@ -5,7 +5,6 @@ export const createUserModuleRepo = async (data) => {
 };
 
 export const getUserModulesRepo = async (userId) => {
-
   return await UserModule.find({ userId }, "-_id -userId").populate([
     {
       path: "subModuleId",

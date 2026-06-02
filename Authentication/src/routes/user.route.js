@@ -7,6 +7,6 @@ const Router = express.Router();
 
 Router.post("/", validator(userValidator), createUser);
 
-Router.get("/:id",validator(userIdValidator),getUserById)
+Router.get("/:id", validator(userIdValidator), getUserById);
 
 export default Router;

@@ -84,7 +84,7 @@ export const resetPassword = asyncHandler(async (req, res) => {
 });
 
 export const logout = asyncHandler(async (req, res) => {
-  const user = await getUserByIdService({id:req.user._id});
+  const user = await getUserByIdService({ id: req.user._id });
 
   await user.save();
 

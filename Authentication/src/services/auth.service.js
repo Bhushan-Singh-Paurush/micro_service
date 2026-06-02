@@ -77,8 +77,7 @@ export const loginService = async (data) => {
     UserData = await redis.hgetall(`UserData:${data.email}`);
     UserData.modulesDetails = JSON.parse(UserData.modulesDetails);
   } else {
-    
-    modulesDetails = await getUserModuleService(user._id) 
+    const modulesDetails = await getUserModuleService(user._id);
 
     await redis.hset(`UserData:${data.email}`, {
       name: user.name,
@@ -130,8 +129,7 @@ export const refreshTokenService = async (data) => {
     UserData = await redis.hgetall(`UserData:${user.email}`);
     UserData.modulesDetails = JSON.parse(UserData.modulesDetails);
   } else {
-    
-    modulesDetails = await getUserModuleService(user._id)
+    const modulesDetails = await getUserModuleService(user._id);
 
     await redis.hset(`UserData:${user.email}`, {
       name: user.name,
@@ -224,8 +222,7 @@ export const resetPasswordService = async (data) => {
 
   const { payload } = await jwtVerify(data.token, secret);
 
-
-  const user =await findUserByIdRepo(payload._id);
+  const user = await findUserByIdRepo(payload._id);
 
   if (!user) {
     throw new apiError(404, "User not found");

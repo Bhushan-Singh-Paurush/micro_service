@@ -30,6 +30,6 @@ export const resetPasswordValidator = z.object({
 
 export const userIdValidator = z.object({
   user: z.object({
-      _id:z.string().length(24, "User id must be of 24 characters"),
-  })
-})
+    _id: z.string().length(24, "User id must be of 24 characters"),
+  }),
+});

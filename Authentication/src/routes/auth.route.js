@@ -35,6 +35,6 @@ Router.post(
   resetPassword
 );
 
-Router.post("/logout",verifyJWT,logout)
+Router.post("/logout", verifyJWT, logout);
 
 export default Router;

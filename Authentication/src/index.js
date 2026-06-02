@@ -2,14 +2,10 @@ import dotenv from "dotenv";
 import dbConnection from "./db/dbConnection.js";
 import app from "./app.js";
 import { redis } from "./redis.js";
-import "./workers.js"
+import "./workers.js";
 dotenv.config({ path: "./.env" });
 
 const port = process.env.PORT || 5000;
-
-const data = await redis.keys("*");
-
-console.log(data);
 
 dbConnection()
   .then(() => {

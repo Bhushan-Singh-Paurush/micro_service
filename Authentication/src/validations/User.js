@@ -10,8 +10,8 @@ export const userValidator = z.object({
   }),
 });
 
-export const userIdValidator=z.object({
-  params:z.object({
-    id:z.string().length(24,"User id must be of 24 characters")
-  })
-})
+export const userIdValidator = z.object({
+  params: z.object({
+    id: z.string().length(24, "User id must be of 24 characters"),
+  }),
+});

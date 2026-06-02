@@ -2,7 +2,6 @@ import { Worker } from "bullmq";
 import { sendMail } from "./utils/mailSender.js";
 import { connection } from "./queues.js";
 
-
 export const emailWorker = new Worker(
   "emails",
   async (job) => {

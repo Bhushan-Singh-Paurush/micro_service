@@ -1,4 +1,7 @@
-import { createUserService, getUserByIdService} from "../services/user.service.js";
+import {
+  createUserService,
+  getUserByIdService,
+} from "../services/user.service.js";
 import apiResponse from "../utils/apiResponse.js";
 import asyncHandler from "../utils/asyncHandler.js";
 
@@ -10,12 +13,8 @@ export const createUser = asyncHandler(async (req, res) => {
     .json(new apiResponse(201, "created successfully", null));
 });
 
+export const getUserById = asyncHandler(async (req, res) => {
+  const user = await getUserByIdService(req.params);
 
-export const getUserById=asyncHandler(async(req,res)=>{
-  const user = await  getUserByIdService(req.params)
-  
-   return res
-    .status(200)
-    .json(new apiResponse(201, "User details", user));
-
-})
+  return res.status(200).json(new apiResponse(201, "User details", user));
+});
