@@ -10,3 +10,4 @@ export const userModuleValidator = z.object({
     })
   ),
 });
+

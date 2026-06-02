@@ -4,6 +4,8 @@ dotenv.config({ path: "./.env" });
 import { createServer } from "http";
 import app from "./app.js";
 import { initSocket } from "./utils/socket.js";
+import "../src/workers.js"
+
 
 const server = createServer(app);
 

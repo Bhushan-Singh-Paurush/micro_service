@@ -4,6 +4,8 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import attendanceRouter from "../src/routes/attendance.route.js";
+import userRouter from "../src/routes/user.route.js"
+
 
 const app = express();
 
@@ -26,7 +28,9 @@ app.use(urlencoded({ limit: "16kb" }));
 
 app.use(cookieParser());
 
-app.use("/api/v1/attendance", attendanceRouter);
+app.use("/api/v1/attendance", attendanceRouter)
+
+app.use("/api/v1/user",userRouter)
 
 app.use(async (error, req, res, next) => {
   return res.status(error.statusCode || 500).json({

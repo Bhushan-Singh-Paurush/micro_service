@@ -9,10 +9,12 @@ import {
 import {
   forgotPassword,
   login,
+  logout,
   refreshAccessToken,
   resetPassword,
   sendLoginOtp,
 } from "../controllers/auth.controller.js";
+import { verifyJWT } from "../middleware/auth.js";
 const Router = express();
 
 Router.post("/login", validator(loginValidator), login);
@@ -32,5 +34,7 @@ Router.post(
   validator(resetPasswordValidator),
   resetPassword
 );
+
+Router.post("/logout",verifyJWT,logout)
 
 export default Router;

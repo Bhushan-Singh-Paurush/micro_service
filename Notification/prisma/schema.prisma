@@ -15,18 +15,20 @@ model Notification{
   data Json
   status NotificationStatus @default(PENDING)
   created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  updated_at DateTime @updatedAt @default(now())
   @@index([userId])
   @@index([service_name])
 }
 
-model Security_Persons{
+model SecurityPersons{
       id String @id @default(uuid())
       userId String 
-      email String?
+      email String? @unique
       phone String?
       name String
       status Boolean @default(true)
+      created_at DateTime @default(now())
+      updated_at DateTime @updatedAt @default(now())
 }
 
 enum NotificationStatus{

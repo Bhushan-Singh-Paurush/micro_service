@@ -4,14 +4,20 @@ import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
-import notificationRoute from "../src/routes/notification.route.js"
+import notificationRoute from "../src/routes/notification.route.js";
+import securityPersonRoute from "../src/routes/securityPerson.route.js"
 const app = express();
 
 app.use(morgan("dev"));
 
 app.use(helmet());
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials:true
+  })
+);
 
 app.use(express.json({ limit: "16kb" }));
 
@@ -19,9 +25,12 @@ app.use(urlencoded({ limit: "16kb" }));
 
 app.use(cookieParser());
 
-app.use("/api/v1/notification",notificationRoute)
+app.use("/api/v1/notification", notificationRoute);
 
-app.use((error, req, res) => {
+app.use("/api/v1/securityPerson",securityPersonRoute)
+
+
+app.use(async (error, req, res, next) => {
   return res.status(error.statusCode || 500).json({
     success: false,
     message: error.message || "Internal Server Error",

@@ -6,10 +6,11 @@ import { redis } from "../redis.js";
 import {
   findUserByEmailRepo,
   findUserByIdRepo,
-} from "../repositories/auth.repositories.js";
+} from "../repositories/user.repository.js";
 import { getUserModulesRepo } from "../repositories/userModule.repository.js";
 import apiError from "../utils/apiError.js";
 import { jwtVerify, SignJWT } from "jose";
+import { getUserModuleService } from "./userModule.service.js";
 
 async function generateToken(UserData) {
   const refrestSecret = new TextEncoder().encode(
@@ -76,29 +77,15 @@ export const loginService = async (data) => {
     UserData = await redis.hgetall(`UserData:${data.email}`);
     UserData.modulesDetails = JSON.parse(UserData.modulesDetails);
   } else {
-    const userModules = await getUserModulesRepo(user._id);
+    
+    modulesDetails = await getUserModuleService(user._id) 
 
-    const modulesDetails = await userModules.map((module) => ({
-      module_name: module.subModuleId.moduleId.name,
-      subModule_name: module.subModuleId.name,
-      read: module.read,
-      write: module.write,
-    }));
-
-    UserData = {
+    await redis.hset(`UserData:${data.email}`, {
       name: user.name,
       email: user.email,
       _id: user._id,
       role: user.role,
-      modulesDetails,
-    };
-
-    await redis.hset(`UserData:${data.email}`, {
-      name: UserData.name,
-      email: UserData.email,
-      _id: UserData._id,
-      role: UserData.role,
-      modulesDetails: JSON.stringify(UserData.modulesDetails),
+      modulesDetails: JSON.stringify(modulesDetails),
     });
   }
 
@@ -143,29 +130,15 @@ export const refreshTokenService = async (data) => {
     UserData = await redis.hgetall(`UserData:${user.email}`);
     UserData.modulesDetails = JSON.parse(UserData.modulesDetails);
   } else {
-    const userModules = await getUserModulesRepo(user._id);
+    
+    modulesDetails = await getUserModuleService(user._id)
 
-    const modulesDetails = await userModules.map((module) => ({
-      module_name: module.subModuleId.moduleId.name,
-      subModule_name: module.subModuleId.name,
-      read: module.read,
-      write: module.write,
-    }));
-
-    UserData = {
+    await redis.hset(`UserData:${user.email}`, {
       name: user.name,
       email: user.email,
       _id: user._id,
       role: user.role,
-      modulesDetails,
-    };
-
-    await redis.hset(`UserData:${user.email}`, {
-      name: UserData.name,
-      email: UserData.email,
-      _id: UserData._id,
-      role: UserData.role,
-      modulesDetails: JSON.stringify(UserData.modulesDetails),
+      modulesDetails: JSON.stringify(modulesDetails),
     });
   }
 

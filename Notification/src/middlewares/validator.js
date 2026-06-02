@@ -9,6 +9,7 @@ const validator = (schema) =>
         params: req.params,
         query: req.query,
         cookies: req.cookies,
+        user:req.user
       });
 
       next();

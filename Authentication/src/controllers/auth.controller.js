@@ -5,6 +5,7 @@ import {
   resetPasswordService,
   sendOTPService,
 } from "../services/auth.service.js";
+import { getUserByIdService } from "../services/user.service.js";
 import { forgotPasswordTemplate } from "../templates/forgotPassword.template.js";
 import { otpTemplate } from "../templates/otp.template.js";
 import apiResponse from "../utils/apiResponse.js";
@@ -69,7 +70,9 @@ export const forgotPassword = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new apiResponse(200, "Reset Password link is send to your email", null));
+    .json(
+      new apiResponse(200, "Reset Password link is send to your email", null)
+    );
 });
 
 export const resetPassword = asyncHandler(async (req, res) => {
@@ -78,4 +81,22 @@ export const resetPassword = asyncHandler(async (req, res) => {
   return res
     .status(200)
     .json(new apiResponse(200, "password reset successfully", null));
+});
+
+export const logout = asyncHandler(async (req, res) => {
+  const user = await getUserByIdService({id:req.user._id});
+
+  await user.save();
+
+  const options = {
+    secure: process.env.NODE_ENV == "production" ? true : false,
+    httpOnly: true,
+    sameSite: process.env.NODE_ENV == "production" ? "none" : "lax",
+  };
+
+  return res
+    .status(200)
+    .cookie("accessToken", "", options)
+    .cookie("refreshToken", "", options)
+    .json(new apiResponse(200, "Logout successfully"));
 });

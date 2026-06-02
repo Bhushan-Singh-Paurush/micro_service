@@ -1,8 +1,7 @@
 import { Worker } from "bullmq";
 import { sendMail } from "./utils/mailSender.js";
 import { connection } from "./queues.js";
-import dotenv from "dotenv";
-dotenv.config({ path: "../.env" });
+
 
 export const emailWorker = new Worker(
   "emails",

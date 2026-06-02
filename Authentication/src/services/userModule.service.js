@@ -1,5 +1,5 @@
 import { redis } from "../redis.js";
-import { findUserByIdRepo } from "../repositories/auth.repositories.js";
+import { findUserByIdRepo } from "../repositories/user.repository.js";
 import { createUserModuleRepo, getUserModulesRepo } from "../repositories/userModule.repository.js";
 
 export const createUserModuleService = async (data) => {
@@ -7,7 +7,8 @@ export const createUserModuleService = async (data) => {
 
   const user = await findUserByIdRepo(data[0].userId)
 
-  
+
+
 
   const exists=await redis.exists(`UserData:${user.email}`)
 
@@ -15,7 +16,28 @@ export const createUserModuleService = async (data) => {
     await redis.del(`UserData:${user.email}`)
   }
 
-    const userModules = await getUserModulesRepo(user._id);
+
+    const modulesDetails=await getUserModuleService(user._id)
+    
+    
+      
+
+    await redis.hset(`UserData:${user.email}`, {
+        name: user.name,
+        email: user.email,
+        _id: user._id,
+        role: user.role,
+        modulesDetails: JSON.stringify(modulesDetails),
+      });
+    
+      return ;
+
+};
+
+
+export const getUserModuleService=async(data)=>{
+      
+      const userModules = await getUserModulesRepo(data);
   
       const modulesDetails = await userModules.map((module) => ({
         module_name: module.subModuleId.moduleId.name,
@@ -24,22 +46,6 @@ export const createUserModuleService = async (data) => {
         write: module.write,
       }));
   
-      const UserData = {
-        name: user.name,
-        email: user.email,
-        _id: user._id,
-        role: user.role,
-        modulesDetails,
-      };
-  
-      await redis.hset(`UserData:${user.email}`, {
-        name: UserData.name,
-        email: UserData.email,
-        _id: UserData._id,
-        role: UserData.role,
-        modulesDetails: JSON.stringify(UserData.modulesDetails),
-      });
-    
-      return ;
+      return modulesDetails.length>0  ? modulesDetails : [] ;
 
-};
+}
