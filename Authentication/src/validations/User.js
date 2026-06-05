@@ -5,6 +5,7 @@ export const userValidator = z.object({
     name: z.string(),
     email: z.email(),
     password: z.string(),
+    role:z.enum(["admin","client"]).optional(),
     logo: z.string().optional(),
     phone: z.string().optional(),
   }),

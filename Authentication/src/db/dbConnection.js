@@ -4,9 +4,10 @@ async function dbConnection() {
   try {
     await mongoose.connect(process.env.DATABASE_URL);
 
-    console.log("Connected to database successfully");
+    console.log("Connected to database successfully ☑️");
   } catch (error) {
-    throw error;
+    throw new Error("Failed to connect to mongodb database ",error);
+    
   }
 }
 

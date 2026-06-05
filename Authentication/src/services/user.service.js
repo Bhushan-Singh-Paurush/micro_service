@@ -2,10 +2,11 @@ import {
   createUserRepo,
   findUserByEmailRepo,
   findUserByIdRepo,
+  getAllUserRepo,
 } from "../repositories/user.repository.js";
 
 export const createUserService = async (data) => {
-  await createUserRepo(data);
+  return await createUserRepo(data);
 };
 
 export const getUserByIdService = async (data) => {
@@ -15,3 +16,7 @@ export const getUserByIdService = async (data) => {
 
   return user;
 };
+
+export const getAllUserService=async()=>{
+  return await getAllUserRepo()
+}

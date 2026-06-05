@@ -78,11 +78,12 @@ export const loginService = async (data) => {
     UserData.modulesDetails = JSON.parse(UserData.modulesDetails);
   } else {
     const modulesDetails = await getUserModuleService(user._id);
-
+  
+  
     await redis.hset(`UserData:${data.email}`, {
       name: user.name,
       email: user.email,
-      _id: user._id,
+      _id: user._id.toString(),
       role: user.role,
       modulesDetails: JSON.stringify(modulesDetails),
     });

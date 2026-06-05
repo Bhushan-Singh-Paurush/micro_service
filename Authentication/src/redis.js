@@ -1,4 +1,6 @@
 import { Redis } from "ioredis";
+import dotenv from "dotenv"
+dotenv.config({path:"./.env"})
 
 export const redis = new Redis({
   host: process.env.REDIS_HOST,

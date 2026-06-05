@@ -1,5 +1,6 @@
 import {
   createUserService,
+  getAllUserService,
   getUserByIdService,
 } from "../services/user.service.js";
 import apiResponse from "../utils/apiResponse.js";
@@ -18,3 +19,10 @@ export const getUserById = asyncHandler(async (req, res) => {
 
   return res.status(200).json(new apiResponse(201, "User details", user));
 });
+
+
+export const getAllUsers=asyncHandler(async(req,res)=>{
+       const users=await getAllUserService()
+
+        return res.status(200).json(new apiResponse(201, "All Users", users));
+})

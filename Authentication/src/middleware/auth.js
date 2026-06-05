@@ -32,9 +32,13 @@ export const verifyJWT = asyncHandler(async (req, _, next) => {
 export const isClient = asyncHandler(async (req, _, next) => {
   if (req?.user?.role !== "client")
     throw new apiError(403, "This is protected route for client only");
+
+    next();
 });
 
 export const isAdmin = asyncHandler(async (req, _, next) => {
   if (req?.user?.role !== "admin")
     throw new apiError(403, "This is protected route for admin only");
+
+  next();
 });
