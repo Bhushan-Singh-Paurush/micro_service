@@ -14,14 +14,14 @@ async function startServer() {
     
     dbConnection();
 
-    // const admin = await User.findOne({ email: process.env.ADMIN_EMAIL });
+    const admin = await User.findOne({ email: process.env.ADMIN_EMAIL });
 
-    // if (!admin) {
-    //   await createUser();
-    //   console.log("Admin created successfully ☑️");
-    // } else {
-    //   console.log("Admin is already present ☑️");
-    // }
+    if (!admin) {
+      await createUser();
+      console.log("Admin created successfully ☑️");
+    } else {
+      console.log("Admin is already present ☑️");
+    }
 
     app.listen(port, () => {
       console.log(`server is running on port ${port}`);
