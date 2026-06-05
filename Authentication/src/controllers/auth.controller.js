@@ -15,9 +15,10 @@ export const login = asyncHandler(async (req, res) => {
   const { UserData, refreshToken, accessToken } = await loginService(req.body);
 
   const options = {
-    secure: process.env.NODE_ENV == "production" ? true : false,
     httpOnly: true,
+    secure: process.env.NODE_ENV == "production" ? true : false,
     sameSite: process.env.NODE_ENV == "production" ? "none" : "lax",
+    domain: process.env.NODE_ENV == "production" ? ".bhushan.sbs" : undefined
   };
 
   if (req.body.isPersist) {
@@ -37,8 +38,9 @@ export const refreshAccessToken = asyncHandler(async (req, res) => {
 
   const options = {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production" ? false : true,
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    secure: process.env.NODE_ENV == "production" ? true : false,
+    sameSite: process.env.NODE_ENV == "production" ? "none" : "lax",
+    domain: process.env.NODE_ENV == "production" ? ".bhushan.sbs" : undefined
   };
 
   if (isPersist) options.maxAge = 7 * 24 * 60 * 60 * 1000;
@@ -89,9 +91,10 @@ export const logout = asyncHandler(async (req, res) => {
   await user.save();
 
   const options = {
-    secure: process.env.NODE_ENV == "production" ? true : false,
     httpOnly: true,
+    secure: process.env.NODE_ENV == "production" ? true : false,
     sameSite: process.env.NODE_ENV == "production" ? "none" : "lax",
+    domain: process.env.NODE_ENV == "production" ? ".bhushan.sbs" : undefined
   };
 
   return res
