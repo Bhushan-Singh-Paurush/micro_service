@@ -25,6 +25,10 @@ app.use(urlencoded({ limit: "16kb" }));
 
 app.use(cookieParser());
 
+app.use("/",(req,res)=>{
+  res.send("Notification server is running")
+})
+
 app.use("/api/v1/notification", notificationRoute);
 
 app.use("/api/v1/securityPerson",securityPersonRoute)
