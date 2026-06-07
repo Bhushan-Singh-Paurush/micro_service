@@ -29,10 +29,6 @@ app.use(urlencoded({ limit: "16kb" }));
 
 app.use(cookieParser());
 
-app.use("/",(req,res)=>{
-   res.send("Authentication server is running")
-})
-
 app.use("/api/v1/user", userRoute);
 
 app.use("/api/v1/module", moduleRoute);
@@ -42,6 +38,10 @@ app.use("/api/v1/subModule", subModuleRoute);
 app.use("/api/v1/userModule", userModuleRoute);
 
 app.use("/api/v1/auth", authRoute);
+
+app.use("/",(req,res)=>{
+   res.send("Authentication server is running")
+})
 
 app.use(async (error, req, res, next) => {
   return res.status(error.statusCode || 500).json({

@@ -17,6 +17,8 @@ export const verifyJWT = asyncHandler(async (req, _, next) => {
   try {
     const { payload } = await jwtVerify(token, accessSecret);
 
+    console.log(payload)
+
     const user = await getUserByIdService({ id: payload._id });
 
     if (!user) throw new apiError(401, "Invalid token");
@@ -25,6 +27,7 @@ export const verifyJWT = asyncHandler(async (req, _, next) => {
 
     next();
   } catch (error) {
+    console.log(error)
     throw new apiError(401, "expire token");
   }
 });
