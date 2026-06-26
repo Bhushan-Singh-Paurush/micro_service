@@ -1,5 +1,14 @@
 _format_version: "3.0"
 
+
+plugins:
+  - name: rate-limiting
+    config:
+      minute: 100
+      policy: redis
+      redis_host: redis
+      redis_port: 6379
+
 services:
   - name: attendance_service
     url: http://attendance:4001

@@ -13,6 +13,8 @@ import { jwtVerify, SignJWT } from "jose";
 import { getUserModuleService } from "./userModule.service.js";
 
 async function generateToken(UserData) {
+
+ 
   const refrestSecret = new TextEncoder().encode(
     process.env.REFRESH_TOKEN_SECRET
   );
@@ -79,15 +81,19 @@ export const loginService = async (data) => {
   } else {
     const modulesDetails = await getUserModuleService(user._id);
   
-  
-    await redis.hset(`UserData:${data.email}`, {
-      name: user.name,
-      email: user.email,
-      _id: user._id.toString(),
-      role: user.role,
-      modulesDetails: JSON.stringify(modulesDetails),
-    });
+    
+    UserData={
+         name: user.name,
+        email: user.email,
+        _id: user._id.toString(),
+        role: user.role,
+        modulesDetails,
+    }
+
+    await redis.hset(`UserData:${data.email}`,{...UserData,modulesDetails:JSON.stringify(modulesDetails)});
   }
+
+  console.log("this is UserData",UserData)
 
   const { refreshToken, accessToken } = await generateToken(UserData);
 

@@ -6,7 +6,7 @@ export const createNotificationRepo = async (data) => {
   });
 };
 
-export const getNotificationRepo = async (moduleArray, userId) => {
+export const getNotificationRepo = async (moduleArray, userId, page, limit) => {
   const start = new Date();
   start.setHours(0, 0, 0, 0);
 
@@ -14,15 +14,15 @@ export const getNotificationRepo = async (moduleArray, userId) => {
   end.setHours(23, 59, 59, 999);
 
   return await db.notification.findMany({
+    orderBy:{
+      created_at:"desc"
+    },
     where: {
       userId: userId,
       service_name: {
         in: moduleArray,
       },
-      created_at: {
-        gte: start,
-        lte: end,
-      },
+      
     },
     select: {
       service_name: true,
@@ -31,6 +31,8 @@ export const getNotificationRepo = async (moduleArray, userId) => {
       status: true,
       id:true
     },
+    skip:Number(page)*Number(limit),
+    take:Number(limit)
   });
 };
 

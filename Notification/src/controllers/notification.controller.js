@@ -17,7 +17,7 @@ export const createNotification = asyncHandler(async (req, res) => {
 
 export const getNotification = asyncHandler(async (req, res) => {
 
-  const notifications = await getNotificationService(req.user);
+  const notifications = await getNotificationService(req.user._id,req.query.page,req.query.limit);
 
   return res
     .status(201)

@@ -12,10 +12,10 @@ export const createNotificationService = async (data) => {
   await createNotificationRepo(data);
 };
 
-export const getNotificationService = async (data) => {
+export const getNotificationService = async (_id,page,limit) => {
 
   const { data: response } = await axios(
-    `${process.env.AUTH_ULR}/api/v1/userModule/${data._id}`
+    `${process.env.AUTH_ULR}/api/v1/userModule/${_id}`
   );
 
   if (
@@ -41,7 +41,7 @@ export const getNotificationService = async (data) => {
   });
 
 
-  const notifications = await getNotificationRepo(modules, data._id);
+  const notifications = await getNotificationRepo(modules,_id,page,limit);
 
 
 

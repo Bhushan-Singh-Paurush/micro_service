@@ -14,6 +14,8 @@ async function startServer() {
     
     dbConnection();
 
+    await redis.flushall();
+
     const admin = await User.findOne({ email: process.env.ADMIN_EMAIL });
 
     if (!admin) {

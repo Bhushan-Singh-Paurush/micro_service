@@ -14,7 +14,7 @@ app.use(helmet());
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin:process.env.NODE_ENV!=="production" ? 'http://localhost:3000' :process.env.ORIGIN,
     credentials:true
   })
 );
@@ -25,13 +25,15 @@ app.use(urlencoded({ limit: "16kb" }));
 
 app.use(cookieParser());
 
-app.use("/",(req,res)=>{
-  res.send("Notification server is running")
-})
+
 
 app.use("/api/v1/notification", notificationRoute);
 
 app.use("/api/v1/securityPerson",securityPersonRoute)
+
+app.use("/",(req,res)=>{
+  res.send("Notification server is running")
+})
 
 
 app.use(async (error, req, res, next) => {
