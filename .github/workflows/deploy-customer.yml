@@ -1,6 +1,5 @@
 name: Deploy Customer Service
 
-
 on:
   push:
     branches:
@@ -8,26 +7,34 @@ on:
     paths:
       - 'Customer/**'
 
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
-
     steps:
-      - name: Checkout
+      - name: Checkout Repository
         uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and Push Customer Image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./Customer
+          push: true
+          tags: bhushansingh/customer:latest
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v1.0.3
-
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ec2-user
-          key: ${{ secrets.EC2_SSH_KEY }} 
-
+          key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd /home/ec2-user/micro_service
-            git pull origin main
-            sudo docker compose build customer 
-            sudo docker compose up -d customer       
+            sudo docker compose pull customer
+            sudo docker compose up -d customer

@@ -6,7 +6,6 @@ import app from "./app.js";
 import { initSocket } from "./utils/socket.js";
 import "../src/workers.js"
 
-
 const server = createServer(app);
 
 const port = process.env.PORT || 4005;

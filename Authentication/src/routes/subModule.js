@@ -5,6 +5,6 @@ import { createSubModule } from "../controllers/subModule.controller.js";
 import { isAdmin, verifyJWT } from "../middleware/auth.js";
 const Router = express.Router();
 
-Router.post("/",verifyJWT,isAdmin, validator(subModuleValidator), createSubModule);
+Router.post("/", validator(subModuleValidator), createSubModule);
 
 export default Router;

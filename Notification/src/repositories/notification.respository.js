@@ -1,7 +1,7 @@
 import db from "../db/dbConnection.js";
 
 export const createNotificationRepo = async (data) => {
-  await db.notification.create({
+  return await db.notification.create({
     data: data,
   });
 };
@@ -13,16 +13,23 @@ export const getNotificationRepo = async (moduleArray, userId, page, limit) => {
   const end = new Date();
   end.setHours(23, 59, 59, 999);
 
+  console.log(moduleArray, userId, page, limit)
+
   return await db.notification.findMany({
+    
     orderBy:{
       created_at:"desc"
     },
     where: {
-      userId: userId,
       service_name: {
         in: moduleArray,
       },
-      
+      userId:userId,
+
+      created_at:{
+        gte:start,
+        lte:end
+      }
     },
     select: {
       service_name: true,

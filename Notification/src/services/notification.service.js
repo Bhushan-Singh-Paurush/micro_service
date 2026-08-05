@@ -9,7 +9,7 @@ import { featuresThatHaveNotification } from "../constant.js";
 import { emailQueue } from "../queues.js";
 
 export const createNotificationService = async (data) => {
-  await createNotificationRepo(data);
+  return await createNotificationRepo(data);
 };
 
 export const getNotificationService = async (_id,page,limit) => {

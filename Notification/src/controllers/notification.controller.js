@@ -6,9 +6,19 @@ import {
 } from "../services/notification.service.js";
 import apiResponse from "../utils/apiResponse.js";
 import asyncHandler from "../utils/asyncHandler.js";
+import { getObjectURL } from "../utils/awss3.js";
+import { getIO } from "../utils/socket.js";
 
 export const createNotification = asyncHandler(async (req, res) => {
-  await createNotificationService(req.body);
+  const newNotification  = await createNotificationService(req.body);
+  
+  console.log(newNotification)
+
+  const crop=await getObjectURL(newNotification.data.crop);
+
+  const io = getIO()
+  
+  io.to(`${req.body.userId}`).emit(`notification`,{...newNotification,data:{...newNotification.data,crop:crop}})
 
   return res
     .status(201)

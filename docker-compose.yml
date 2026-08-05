@@ -1,6 +1,6 @@
 services:
   attendance:
-    build: ./Attendance
+    image: bhushansingh/attendance:latest
     container_name: attendance_server
     env_file:
       - ./Attendance/.env
@@ -9,7 +9,7 @@ services:
       - "4001:4001"
 
   customer:
-    build: ./Customer
+    image: bhushansingh/customer:latest
     container_name: customer_server
     env_file:
       - ./Customer/.env
@@ -18,22 +18,22 @@ services:
       - "4002:4002"
 
   authentication:
-    build: ./Authentication
+    image: bhushansingh/authentication:latest
     container_name: authentication_server
     env_file:
       - ./Authentication/.env
     restart: always
     ports:
-      - "4003:4003"     
+      - "4003:4003"
 
   notification:
-    build: ./Notification
+    image: bhushansingh/notification:latest
     container_name: notification_server
     env_file:
       - ./Notification/.env
     restart: always
     ports:
-      - "4004:4004" 
+      - "4004:4004"
 
   kong:
     image: kong:3.6

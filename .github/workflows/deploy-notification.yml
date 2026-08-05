@@ -7,14 +7,26 @@ on:
     paths:
       - 'Notification/**'
 
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout Repository
         uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and Push Notification Image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./Notification
+          push: true
+          tags: bhushansingh/notification:latest
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v1.0.3
@@ -22,9 +34,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ec2-user
           key: ${{ secrets.EC2_SSH_KEY }}
-
           script: |
             cd /home/ec2-user/micro_service
-            git pull origin main
-            sudo docker compose build notification
+            sudo docker compose pull notification
             sudo docker compose up -d notification
