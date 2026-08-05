@@ -32,7 +32,7 @@ app.use("/api/v1/notification", notificationRoute);
 app.use("/api/v1/securityPerson",securityPersonRoute)
 
 app.use("/",(req,res)=>{
-  res.send("Notification server is running.......")
+  res.send("Notification server is running...")
 })
 
 
